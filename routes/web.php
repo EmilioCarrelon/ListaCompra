@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@getHome' );
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -22,20 +20,12 @@ Route::get('/logout', function () {
     return ("Logout usuario");
 });
 Route::group(['prefix' => 'productos'], function () {
-    Route::get('/', function () {
-        return view('productos.index');
-    });
+    Route::get('/', 'ProductoController@getIndex');
 
-    Route::get('/create', function ($id) {
-        return view('productos.create');
-    });
+    Route::get('/create', 'ProductoController@getCreate');
 
-    Route::get('/show/{id}', function ($id) {
-        return view('productos.show', array('id'=>$id));
-    });
-    Route::get('/edit/{id}', function ($id) {
-        return view('productos.edit', array('id'=>$id));
-    });
+    Route::get('/show/{id}', 'ProductoController@getShow');
+    Route::get('/edit/{id}', 'ProductoController@getEdit');
 
 });
 
