@@ -15,12 +15,19 @@
 
             {{-- TODO: Datos del producto --}}
             <h4 style="min-height:45px;margin:5px 0 10px 0">
-                Nombre:{{$arrayProductos[0]}}<br>
-                Categoria{{$arrayProductos[1]}}
+                Nombre:{{$arrayProductos->nombre}}<br>
+                Categoria{{$arrayProductos->categoria}}
             </h4>
-            <p>Actualmente esta comprado</p>
+            @if($arrayProductos->pendiente == 0)
             <a class="btn btn-danger" href="#" role="button">Pendiente de compra </a>
+ @else
+                <a class="btn btn-primary" href="#" role="button">Quitar de la compra </a>
+@endif
 
+            <a class="btn btn-warning" href="{{ url('/productos/edit/' . $arrayProductos->id ) }}">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                Editar pel&iacute;cula</a>
+            <a class="btn btn-outline-info" href="{{ action('ProductoController@getIndex') }}">Volver al listado</a>
         </div>
     </div>
 
