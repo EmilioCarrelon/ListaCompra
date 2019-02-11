@@ -10,22 +10,26 @@ class ProductoController extends Controller
     public function getIndex()
     {
         $arrayProductos = Producto::all();
-        return view('productos.index', array('arrayProductos'=>$arrayProductos));
+        return view('productos.index', array('arrayProductos' => $arrayProductos));
     }
+
     public function getCreate()
     {
         return view('productos.create');
     }
+
     public function getShow($id)
     {
         $productos = Producto::findOrFail($id);
-        return view('productos.show', array('arrayProductos'=>$productos));
+        return view('productos.show', array('arrayProductos' => $productos));
     }
+
     public function getEdit($id)
     {
         $productos = Producto::findOrFail($id);
-        return view('productos.edit', array('id'=>$productos));
+        return view('productos.edit', array('id' => $productos));
     }
+
     public function postCreate(Request $request)
     {
         $producto = new Producto();
@@ -37,6 +41,7 @@ class ProductoController extends Controller
         $producto->save();
         return redirect('/productos');
     }
+
     public function putEdit(Request $request, $id)
     {
         $producto = Producto::findOrFail($id);
@@ -47,5 +52,14 @@ class ProductoController extends Controller
         $producto->descripcion = $request->descripcion;
         $producto->save();
         return redirect('/productos/show/' . $producto->id);
+    }
+
+    //Cambiar el estado en la base de datos con el boton de comprar;
+    public function changeBuy($id)
+    {
+        $producto = Producto::findOrFail($id);
+        $producto->pendiente = !$producto->pendiente;
+        $producto->save();
+        return back();
     }
 }
