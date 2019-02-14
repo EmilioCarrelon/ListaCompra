@@ -20,8 +20,8 @@ Route::get('/logout', function () {
 });
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'productos'], function () {
-        Route::get('/', 'ProductoController@getIndex');
 
+        Route::get('/categoria', 'ProductoController@cate');
         Route::get('/create', 'ProductoController@getCreate');
         Route::post('/create', 'ProductoController@postCreate');
 
@@ -29,6 +29,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit/{id}', 'ProductoController@getEdit');
         Route::put('/edit/{id}', 'ProductoController@putEdit');
         Route::put('buy/{id}', 'ProductoController@changeBuy');
+
+        Route::get('/{nom?}', 'ProductoController@getIndex');
+
     });
 });
 

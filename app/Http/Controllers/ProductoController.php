@@ -5,11 +5,20 @@ namespace App\Http\Controllers;
 use App\Producto;
 use Illuminate\Http\Request;
 
+
 class ProductoController extends Controller
 {
-    public function getIndex()
+    public function getIndex($nom = null)
     {
-        $arrayProductos = Producto::all();
+
+        if (!isset($nom)) {
+            $arrayProductos = Producto::all();
+
+        } else if (isset($nom)) {
+
+            $arrayProductos = Producto::PorCategoria($nom)->get();
+
+        }
         return view('productos.index', array('arrayProductos' => $arrayProductos));
     }
 
@@ -54,7 +63,8 @@ class ProductoController extends Controller
         return redirect('/productos/show/' . $producto->id);
     }
 
-    //Cambiar el estado en la base de datos con el boton de comprar;
+    //Cambiar el estado en la base de datos con el boton de comprar;//
+
     public function changeBuy($id)
     {
         $producto = Producto::findOrFail($id);
@@ -62,4 +72,12 @@ class ProductoController extends Controller
         $producto->save();
         return back();
     }
+
+    public function cate(){
+         $arrayProductos=Producto::TodaCategoria();
+
+        return view('productos.index', array('arrayProductos' => $arrayProductos));
+    }
+
+
 }
